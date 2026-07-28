@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Mapsi PAI — Lomba Pengetahuan PAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F8F4;
+  --surface:#FFFFFF;
+  --surface-2:#EEF2EB;
+  --primary:#0B4B3C;
+  --primary-light:#177A5C;
+  --primary-dark:#082F26;
+  --accent:#C9973E;
+  --accent-light:#E3B968;
+  --ink:#16231D;
+  --muted:#5C6B61;
+  --line:#DEE6DB;
+  --danger:#B3432E;
+  --danger-bg:#FBEAE5;
+  --success:#1F7A4D;
+  --success-bg:#E8F4EC;
+  --radius:16px;
+  --radius-sm:10px;
+  --font-display:'Fraunces','Amiri',Georgia,serif;
+  --font-body:'Plus Jakarta Sans','Noto Naskh Arabic',system-ui,-apple-system,sans-serif;
+  --font-mono:'Space Mono',ui-monospace,monospace;
+  --font-arabic:'Amiri','Noto Naskh Arabic',serif;
+  --shadow-sm:0 1px 2px rgba(11,75,60,.06),0 1px 1px rgba(11,75,60,.04);
+  --shadow-md:0 8px 24px rgba(11,75,60,.10),0 2px 8px rgba(11,75,60,.06);
+  --shadow-lg:0 20px 50px rgba(8,47,38,.18);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;margin:0;color:var(--primary-dark);letter-spacing:-0.01em;}
+p{margin:0;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+::selection{background:var(--accent-light);color:var(--primary-dark);}
+
+/* ---------- layout shells ---------- */
+.app-shell{min-height:100vh;display:flex;flex-direction:column;}
+.topbar{
+  position:relative;background:var(--primary);color:#fff;overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.topbar-pattern{position:absolute;inset:0;opacity:.16;pointer-events:none;}
+.topbar-inner{
+  position:relative;z-index:1;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;gap:16px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{width:44px;height:44px;flex:none;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);}
+.brand-mark img{width:100%;height:100%;object-fit:contain;}
+.brand-text .eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-light);}
+.brand-text h1{font-size:18px;color:#fff;line-height:1.2;}
+
+/* ---------- logo / ornament ---------- */
+.hero-logo{width:88px;height:88px;margin:0 auto 16px;border-radius:20px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;z-index:1;}
+.hero-logo img{width:100%;height:100%;object-fit:contain;padding:8px;}
+.wilayah-badge{
+  display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);
+  color:var(--accent-light);font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  padding:6px 14px;border-radius:999px;position:relative;z-index:1;margin-bottom:14px;
+}
+.ornament{display:flex;align-items:center;gap:10px;justify-content:center;margin:14px auto;max-width:220px;}
+.ornament .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);}
+.ornament.dark .line{background:linear-gradient(90deg,transparent,var(--line),transparent);}
+.ornament .gem{width:7px;height:7px;background:var(--accent-light);transform:rotate(45deg);flex:none;}
+.ornament.dark .gem{background:var(--accent);}
+.logo-upload-box{display:flex;align-items:center;gap:14px;}
+.logo-preview{width:64px;height:64px;border-radius:12px;border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-2);flex:none;}
+.logo-preview img{width:100%;height:100%;object-fit:contain;padding:4px;}
+.file-btn{position:relative;overflow:hidden;display:inline-flex;}
+.file-btn input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+.q-image-upload{border:1.5px dashed var(--line);border-radius:var(--radius-sm);padding:16px;text-align:center;position:relative;}
+.q-image-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+.q-image-upload img{max-width:100%;max-height:160px;border-radius:8px;margin-bottom:8px;}
+.topbar-nav{display:flex;gap:8px;flex-wrap:wrap;}
+.topbar-nav button{
+  background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22);
+  padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;transition:.15s;
+}
+.topbar-nav button:hover{background:rgba(255,255,255,.18);}
+.topbar-nav button.active{background:var(--accent);border-color:var(--accent);color:var(--primary-dark);}
+
+.main-wrap{flex:1;max-width:1080px;margin:0 auto;padding:32px 24px 64px;width:100%;}
+.footer-note{text-align:center;color:var(--muted);font-size:12px;padding:24px;}
+
+/* ---------- primitives ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);}
+.card-pad{padding:28px;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:999px;border:1px solid transparent;padding:11px 22px;font-weight:700;font-size:14px;
+  transition:.15s;white-space:nowrap;
+}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:var(--primary-light);}
+.btn-accent{background:var(--accent);color:var(--primary-dark);}
+.btn-accent:hover{background:var(--accent-light);}
+.btn-ghost{background:transparent;color:var(--primary);border-color:var(--line);}
+.btn-ghost:hover{background:var(--surface-2);}
+.btn-danger{background:var(--danger-bg);color:var(--danger);}
+.btn-danger:hover{background:#f5d5cb;}
+.btn-sm{padding:7px 14px;font-size:12.5px;}
+.btn-block{width:100%;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--primary-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;}
+.field .hint{font-size:12px;color:var(--muted);margin-top:5px;font-weight:400;text-transform:none;letter-spacing:0;}
+.input,.select,.textarea{
+  width:100%;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:11px 13px;
+  font-size:14.5px;color:var(--ink);background:#fff;transition:.15s;
+}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(23,122,92,.14);}
+.textarea{resize:vertical;min-height:90px;}
+.row{display:flex;gap:14px;flex-wrap:wrap;}
+.row > *{flex:1;min-width:180px;}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em;}
+.badge-ok{background:var(--success-bg);color:var(--success);}
+.badge-warn{background:#FBF1DE;color:#8A6A1E;}
+.badge-off{background:var(--surface-2);color:var(--muted);}
+.divider{height:1px;background:var(--line);margin:22px 0;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);gap:16px;}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-row .ttl{font-weight:600;font-size:14px;}
+.toggle-row .desc{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.switch{position:relative;width:44px;height:25px;flex:none;}
+.switch input{opacity:0;width:0;height:0;}
+.switch .slider{position:absolute;inset:0;background:var(--line);border-radius:999px;transition:.15s;cursor:pointer;}
+.switch .slider:before{content:"";position:absolute;width:19px;height:19px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+.switch input:checked + .slider{background:var(--primary);}
+.switch input:checked + .slider:before{transform:translateX(19px);}
+
+.table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--line);}
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{background:var(--surface-2);text-align:left;padding:11px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--primary-dark);white-space:nowrap;}
+td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:middle;}
+tr:hover td{background:#FAFBF8;}
+.token-code{font-family:var(--font-mono);font-weight:700;letter-spacing:.06em;background:var(--surface-2);padding:3px 8px;border-radius:6px;}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:22px;}
+.tab-btn{
+  background:transparent;border:none;padding:10px 16px;font-weight:700;font-size:13.5px;color:var(--muted);
+  border-bottom:3px solid transparent;white-space:nowrap;
+}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--accent);}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(8,47,38,.45);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;}
+.modal{background:#fff;border-radius:var(--radius);max-width:620px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:1;}
+.modal-body{padding:24px;}
+.modal-close{background:var(--surface-2);border:none;width:30px;height:30px;border-radius:50%;font-size:16px;color:var(--muted);}
+
+.empty{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty svg{opacity:.5;margin-bottom:12px;}
+
+/* ---------- home ---------- */
+.hero{position:relative;text-align:center;padding:52px 20px 44px;overflow:hidden;border-radius:var(--radius);background:linear-gradient(180deg,#0B4B3C 0%,#0E5C48 100%);color:#fff;margin-bottom:28px;box-shadow:var(--shadow-lg);}
+.hero-pattern{position:absolute;inset:0;opacity:.14;}
+.hero-star{width:64px;height:64px;margin:0 auto 18px;position:relative;z-index:1;}
+.hero h2{color:#fff;font-size:clamp(26px,4vw,38px);position:relative;z-index:1;max-width:620px;margin:0 auto;}
+.hero .sub{color:rgba(255,255,255,.82);margin-top:10px;font-size:15px;position:relative;z-index:1;}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media (max-width:640px){.choice-grid{grid-template-columns:1fr;}}
+.choice-card{padding:26px;text-align:left;cursor:pointer;transition:.15s;border-width:1.5px;}
+.choice-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary-light);}
+.choice-icon{width:46px;height:46px;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--primary);}
+.choice-card h3{font-size:18px;margin-bottom:6px;}
+.choice-card p{color:var(--muted);font-size:13.5px;}
+
+/* ---------- token / center forms ---------- */
+.center-wrap{max-width:440px;margin:20px auto;}
+.center-wrap .card-pad{text-align:center;}
+.center-star{width:44px;height:44px;margin:0 auto 14px;color:var(--accent);}
+
+/* ---------- exam ---------- */
+.exam-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
+.exam-progress{font-size:13px;color:var(--muted);font-weight:600;}
+.timer-box{
+  display:flex;align-items:center;gap:8px;background:var(--primary-dark);color:#fff;
+  padding:9px 16px;border-radius:999px;font-family:var(--font-mono);font-weight:700;font-size:15px;letter-spacing:.03em;
+}
+.timer-box.warn{background:var(--danger);}
+.progress-track{height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:26px;}
+.progress-fill{height:100%;background:var(--accent);border-radius:999px;transition:.25s;}
+.q-eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.q-text{font-size:19px;font-weight:600;font-family:var(--font-display);color:var(--primary-dark);margin-bottom:18px;line-height:1.6;unicode-bidi:plaintext;}
+.q-image{width:100%;max-height:280px;object-fit:contain;background:var(--surface-2);border-radius:var(--radius-sm);margin-bottom:18px;border:1px solid var(--line);}
+.q-image-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);flex:none;}
+.opt{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  margin-bottom:10px;cursor:pointer;transition:.12s;background:#fff;
+}
+.opt:hover{border-color:var(--primary-light);background:#FAFBF8;}
+.opt.selected{border-color:var(--primary);background:var(--surface-2);}
+.opt-letter{
+  width:30px;height:30px;border-radius:8px;background:var(--surface-2);color:var(--primary-dark);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none;
+}
+.opt.selected .opt-letter{background:var(--primary);color:#fff;}
+.opt-text{font-size:14.5px;line-height:1.55;unicode-bidi:plaintext;}
+.exam-nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:12px;flex-wrap:wrap;}
+.qnav-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;}
+.qnav-dot{
+  width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:12px;font-weight:700;
+  color:var(--muted);display:flex;align-items:center;justify-content:center;
+}
+.qnav-dot.answered{background:var(--surface-2);border-color:var(--primary-light);color:var(--primary-dark);}
+.qnav-dot.current{border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,151,62,.25);}
+
+/* ---------- result ---------- */
+.score-ring{width:150px;height:150px;margin:8px auto 18px;position:relative;}
+.score-ring svg{transform:rotate(-90deg);}
+.score-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.score-num .n{font-family:var(--font-display);font-size:38px;font-weight:800;color:var(--primary-dark);line-height:1;}
+.score-num .lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
+.stat-box{background:var(--surface-2);border-radius:var(--radius-sm);padding:16px 10px;text-align:center;}
+.stat-box .v{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--primary-dark);}
+.stat-box .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:2px;}
+
+/* ---------- pin dots ---------- */
+.pin-input{letter-spacing:.4em;text-align:center;font-family:var(--font-mono);font-size:20px;font-weight:700;}
+
+.alert{padding:12px 14px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start;}
+.alert-danger{background:var(--danger-bg);color:var(--danger);}
+.alert-ok{background:var(--success-bg);color:var(--success);}
+.alert-info{background:var(--surface-2);color:var(--primary-dark);}
+
+.q-list-item{padding:16px;border:1px solid var(--line);border-radius:var(--radius-sm);margin-bottom:10px;}
+.q-list-item .qh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+.q-list-item .opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;font-size:13px;color:var(--muted);}
+.q-list-item .opts .ok{color:var(--success);font-weight:700;}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+.section-head h2{font-size:21px;}
+.section-head .desc{font-size:13px;color:var(--muted);margin-top:3px;}
+.loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:14px;color:var(--muted);}
+.spinner{width:34px;height:34px;border:3px solid var(--surface-2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.kbd{font-family:var(--font-mono);background:var(--surface-2);border-radius:5px;padding:1px 6px;font-size:12px;}
+@media (max-width:640px){
+  .stat-grid{grid-template-columns:repeat(3,1fr);}
+  .topbar-inner{padding:14px 16px;}
+  .main-wrap{padding:22px 14px 50px;}
+  .card-pad{padding:20px;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- Firebase (Realtime Database) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.15.0/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.15.0/firebase-database-compat.min.js"></script>
+
+<script>
+/* ============================= FIREBASE SETUP =============================
+   Ganti seluruh isi objek di bawah ini dengan config dari Firebase Console
+   punya Anda (Project settings > General > Your apps > SDK setup and
+   configuration > Config). JANGAN lupa juga atur Realtime Database Rules,
+   lihat catatan yang saya berikan di luar file ini. */
+const firebaseConfig = {
+  apiKey: "GANTI_DENGAN_API_KEY",
+  authDomain: "GANTI.firebaseapp.com",
+  databaseURL: "https://GANTI-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "GANTI",
+  storageBucket: "GANTI.appspot.com",
+  messagingSenderId: "GANTI",
+  appId: "GANTI"
+};
+if(typeof firebase === 'undefined'){
+  document.getElementById('app').innerHTML = `<div style="max-width:520px;margin:60px auto;padding:24px;font-family:sans-serif;color:#B3432E;background:#FBEAE5;border-radius:12px;">
+    <b>Gagal memuat Firebase SDK.</b><br>Periksa koneksi internet, atau situs mungkin memblokir skrip dari cdnjs.cloudflare.com. Coba buka file ini langsung di browser (bukan pratinjau di dalam aplikasi lain) atau setelah di-deploy ke Netlify/GitHub Pages.
+  </div>`;
+  throw new Error('Firebase SDK tidak termuat (cek koneksi / pemblokiran skrip eksternal).');
+}
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* ============================= STATE & CONSTANTS ============================= */
+const FB_PATHS = { SETTINGS:'mapsi/settings', QUESTIONS:'mapsi/questions', TOKENS:'mapsi/tokens', RESULTS:'mapsi/results' };
+
+const DEFAULT_SETTINGS = {
+  judul:'Lomba Mapsi PAI',
+  subjudul:'Uji Pengetahuan Pendidikan Agama Islam',
+  wilayah:'Tingkat Kecamatan Tawangharjo',
+  logoData:null,
+  durasiMenit:30,
+  jumlahSoalTampil:0,
+  kkm:70,
+  acakSoal:true,
+  acakOpsi:true,
+  satuKaliKesempatan:true,
+  adminPin:'123456'
+};
+
+let state = {
+  loaded:false,
+  loadError:false,
+  settings: {...DEFAULT_SETTINGS},
+  questions: [],
+  tokens: [],
+  results: [],
+  screen:'home',       // home | token | exam | result | admin-login | admin
+  adminTab:'soal',
+  isAdmin:false,
+  session:null,        // {token,nama,asal,questions,answers,index,endTime}
+  lastResult:null,
+  modal:null,          // {type:'question'|'import', editId}
+  toast:null
+};
+
+let timerInterval = null;
+
+/* ============================= UTIL ============================= */
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function escapeHtml(str){
+  return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function genToken(existing){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let t;
+  do{
+    t = Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+  }while(existing.some(x=>x.token===t));
+  return t;
+}
+function fmtTime(sec){
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  return m+':'+s;
+}
+function fmtDate(ts){
+  if(!ts) return '-';
+  const d = new Date(ts);
+  return d.toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function showToast(msg, type){
+  state.toast = {msg, type: type||'ok'};
+  render();
+  setTimeout(()=>{ state.toast=null; renderToastOnly(); }, 2600);
+}
+function renderToastOnly(){
+  const el = document.getElementById('toastHost');
+  if(el) el.innerHTML = toastHtml();
+}
+
+function resizeImageFile(file, maxDim, quality){
+  return new Promise((resolve, reject)=>{
+    if(!file || !file.type.startsWith('image/')){ reject(new Error('Bukan file gambar')); return; }
+    const reader = new FileReader();
+    reader.onerror = ()=>reject(new Error('Gagal membaca file'));
+    reader.onload = ()=>{
+      const img = new Image();
+      img.onerror = ()=>reject(new Error('Gagal memuat gambar'));
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > maxDim || h > maxDim){
+          if(w>h){ h = Math.round(h * maxDim/w); w = maxDim; }
+          else { w = Math.round(w * maxDim/h); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0,0,w,h);
+        ctx.drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg', quality||0.75));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ============================= STORAGE (FIREBASE) =============================
+   Soal & Pengaturan: hanya admin yang menulis, jadi tetap disimpan sebagai satu
+   blok JSON (di-set ulang penuh tiap simpan) - sederhana dan aman.
+   Token & Hasil Ujian: BANYAK peserta bisa menulis di waktu yang hampir
+   bersamaan, jadi tiap token/hasil disimpan sebagai child node terpisah
+   (bukan satu array besar) supaya tidak saling menimpa, dan disinkronkan
+   real-time lewat listener .on('value') ke semua perangkat yang terbuka. */
+async function loadAll(){
+  try{
+    const [settingsSnap, questionsSnap] = await Promise.all([
+      db.ref(FB_PATHS.SETTINGS).once('value'),
+      db.ref(FB_PATHS.QUESTIONS).once('value')
+    ]);
+    state.settings = settingsSnap.exists() ? {...DEFAULT_SETTINGS, ...settingsSnap.val()} : {...DEFAULT_SETTINGS};
+    const qVal = questionsSnap.val();
+    state.questions = qVal ? Object.keys(qVal).map(k=>qVal[k]) : [];
+    state.loaded = true;
+    attachRealtimeListeners();
+  }catch(e){
+    console.error(e);
+    state.loadError = true;
+  }
+  render();
+}
+function attachRealtimeListeners(){
+  db.ref(FB_PATHS.TOKENS).on('value', snap=>{
+    const val = snap.val();
+    state.tokens = val ? Object.keys(val).map(k=>({token:k, ...val[k]})) : [];
+    // Sengaja TIDAK render() otomatis di sini, supaya admin yang sedang
+    // mengetik nama peserta baru tidak terganggu/terhapus isiannya. Data di
+    // memori tetap selalu ter-update, dan akan langsung terlihat begitu ada
+    // render berikutnya (pindah tab, buat token baru, dll). Kalau mau lihat
+    // status "Sudah Dipakai" ter-update tanpa aksi lain, pakai tombol
+    // "Perbarui" di tab Token Peserta.
+  });
+  db.ref(FB_PATHS.RESULTS).on('value', snap=>{
+    const val = snap.val();
+    state.results = val ? Object.keys(val).map(k=>val[k]) : [];
+    // Tab Rekap Nilai aman untuk auto-refresh (tidak ada input teks bebas
+    // di sana selain kotak pencarian yang nilainya selalu ikut state),
+    // jadi leaderboard bisa update live saat peserta menyelesaikan ujian.
+    if(state.screen==='admin' && state.adminTab==='rekap') render();
+  });
+}
+async function saveSettings(){
+  try{ await db.ref(FB_PATHS.SETTINGS).set(state.settings); }catch(e){ showToast('Gagal menyimpan pengaturan','danger'); }
+}
+async function saveQuestions(){
+  try{
+    const obj = {};
+    state.questions.forEach(q=>{ obj[q.id]=q; });
+    await db.ref(FB_PATHS.QUESTIONS).set(obj);
+  }catch(e){ showToast('Gagal menyimpan soal','danger'); }
+}
+
+/* ============================= NAV ============================= */
+function goHome(){ state.screen='home'; state.isAdmin=false; state.session=null; render(); }
+function goToken(){ state.screen='token'; render(); }
+function goAdminLogin(){ state.screen='admin-login'; render(); }
+
+/* ============================= ICONS ============================= */
+const ICONS = {
+  user:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>`,
+  shield:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.6-3 7.8-7 9-4-1.2-7-4.4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  clock:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`,
+  plus:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+  edit:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>`,
+  trash:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14a1 1 0 01-1 1H10a1 1 0 01-1-1V6"/></svg>`,
+  copy:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>`,
+  download:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>`,
+  check:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`,
+  arrowLeft:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-7l-7 7 7 7"/></svg>`,
+  arrowRight:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-7l7 7-7 7"/></svg>`,
+  book:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 016.5 2H20v17H6.5A2.5 2.5 0 004 21.5"/><path d="M4 4.5v17"/></svg>`,
+  upload:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0l-4 4m4-4l4 4"/><path d="M4 5h16"/></svg>`,
+  logout:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>`,
+};
+function starSVG(id, opacity){
+  return `<svg class="topbar-pattern" preserveAspectRatio="none" width="100%" height="100%"><defs><pattern id="${id}" width="52" height="52" patternUnits="userSpaceOnUse"><g fill="none" stroke="#C9973E" stroke-width="1" stroke-opacity="${opacity}"><rect x="10" y="10" width="32" height="32"/><polygon points="26,3 49,26 26,49 3,26"/></g></pattern></defs><rect width="100%" height="100%" fill="url(#${id})"/></svg>`;
+}
+function heroStar(){
+  return `<svg class="hero-star" viewBox="0 0 64 64" fill="none"><g stroke="#E3B968" stroke-width="1.6"><rect x="14" y="14" width="36" height="36"/><polygon points="32,4 60,32 32,60 4,32"/></g><circle cx="32" cy="32" r="4" fill="#E3B968"/></svg>`;
+}
+function centerStar(){
+  return `<svg viewBox="0 0 64 64" fill="none" width="44" height="44"><g stroke="#C9973E" stroke-width="1.8"><rect x="16" y="16" width="32" height="32"/><polygon points="32,6 58,32 32,58 6,32"/></g></svg>`;
+}
+
+/* ============================= RENDER ROOT ============================= */
+function render(){
+  const app = document.getElementById('app');
+  if(!state.loaded && !state.loadError){
+    app.innerHTML = `<div class="loading-wrap"><div class="spinner"></div><div>Memuat aplikasi…</div></div>`;
+    return;
+  }
+  if(state.loadError){
+    app.innerHTML = `<div class="loading-wrap"><div>Gagal memuat data.</div><button class="btn btn-primary" onclick="loadAll()">Coba Lagi</button></div>`;
+    return;
+  }
+  const showTopbar = state.screen!=='exam';
+  app.innerHTML = `
+    <div class="app-shell">
+      ${showTopbar ? topbarHtml() : examTopbarMini()}
+      <div class="main-wrap">${screenHtml()}</div>
+      ${state.screen!=='exam' ? `<div class="footer-note">Mapsi PAI · Aplikasi ujian online berbasis token</div>` : ''}
+    </div>
+    <div id="toastHost">${toastHtml()}</div>
+    ${state.modal ? modalHtml() : ''}
+  `;
+  afterRender();
+}
+
+function topbarHtml(){
+  return `
+  <div class="topbar">
+    ${starSVG('sp1','0.5')}
+    <div class="topbar-inner">
+      <div class="brand" style="cursor:pointer" onclick="goHome()">
+        <div class="brand-mark">${state.settings.logoData ? `<img src="${state.settings.logoData}" alt="Logo Mapsi">` : heroStarSmall()}</div>
+        <div class="brand-text">
+          <div class="eyebrow">${escapeHtml(state.settings.wilayah||'Kompetisi PAI')}</div>
+          <h1>${escapeHtml(state.settings.judul)}</h1>
+        </div>
+      </div>
+      <div class="topbar-nav">
+        <button class="${state.screen==='home'?'active':''}" onclick="goHome()">Beranda</button>
+        ${state.isAdmin ? `<button class="active">Panel Admin</button><button onclick="adminLogout()">Keluar</button>` : `<button onclick="goAdminLogin()">Admin</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+function examTopbarMini(){
+  return `<div class="topbar" style="padding:2px 0;">${starSVG('sp2','0.35')}
+    <div class="topbar-inner" style="padding:12px 24px;">
+      <div class="brand"><div class="brand-mark">${state.settings.logoData ? `<img src="${state.settings.logoData}" alt="Logo Mapsi">` : heroStarSmall()}</div><div class="brand-text"><h1 style="font-size:16px;">${escapeHtml(state.settings.judul)}</h1></div></div>
+    </div></div>`;
+}
+function heroStarSmall(){
+  return `<svg viewBox="0 0 40 40" fill="none" width="40" height="40"><g stroke="#E3B968" stroke-width="1.6"><rect x="9" y="9" width="22" height="22"/><polygon points="20,2 38,20 20,38 2,20"/></g></svg>`;
+}
+function toastHtml(){
+  if(!state.toast) return '';
+  const cls = state.toast.type==='danger' ? 'alert-danger' : 'alert-ok';
+  return `<div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:80;min-width:260px;max-width:90vw;">
+    <div class="alert ${cls}" style="box-shadow:var(--shadow-md);margin:0;">${escapeHtml(state.toast.msg)}</div>
+  </div>`;
+}
+
+function screenHtml(){
+  switch(state.screen){
+    case 'home': return homeScreen();
+    case 'token': return tokenScreen();
+    case 'exam': return examScreen();
+    case 'result': return resultScreen();
+    case 'admin-login': return adminLoginScreen();
+    case 'admin': return adminScreen();
+    default: return homeScreen();
+  }
+}
+
+/* ============================= HOME ============================= */
+function homeScreen(){
+  return `
+  <div class="hero">
+    ${starSVG('sp3','0.5')}
+    ${state.settings.wilayah ? `<div class="wilayah-badge">${ICONS.book} ${escapeHtml(state.settings.wilayah)}</div><br>` : ''}
+    ${state.settings.logoData ? `<div class="hero-logo"><img src="${state.settings.logoData}" alt="Logo Mapsi"></div>` : heroStar()}
+    <h2>${escapeHtml(state.settings.judul)}</h2>
+    <div class="ornament"><div class="line"></div><div class="gem"></div><div class="line"></div></div>
+    <p class="sub">${escapeHtml(state.settings.subjudul)}</p>
+  </div>
+  <div class="choice-grid">
+    <div class="card choice-card" onclick="goToken()">
+      <div class="choice-icon">${ICONS.user}</div>
+      <h3>Saya Peserta</h3>
+      <p>Masukkan token ujian untuk mulai mengerjakan soal.</p>
+    </div>
+    <div class="card choice-card" onclick="goAdminLogin()">
+      <div class="choice-icon">${ICONS.shield}</div>
+      <h3>Panitia / Admin</h3>
+      <p>Kelola bank soal, token peserta, pengaturan, dan rekap nilai.</p>
+    </div>
+  </div>`;
+}
+
+/* ============================= TOKEN ENTRY ============================= */
+function tokenScreen(){
+  return `
+  <div class="center-wrap">
+    <div class="card card-pad">
+      <div class="center-star">${centerStar()}</div>
+      <h3 style="margin-bottom:6px;">Masuk dengan Token</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;">Masukkan token ujian yang diberikan panitia.</p>
+      <div id="tokenAlert"></div>
+      <div class="field" style="text-align:left;">
+        <label>Token Ujian</label>
+        <input id="tokenInput" class="input pin-input" maxlength="6" placeholder="ABCD12" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')submitToken()">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="submitToken()">Mulai Ujian</button>
+      <div style="margin-top:16px;"><button class="btn btn-ghost btn-sm" onclick="goHome()">${ICONS.arrowLeft} Kembali</button></div>
+    </div>
+  </div>`;
+}
+function submitToken(){
+  const val = document.getElementById('tokenInput').value.trim().toUpperCase();
+  const alertBox = document.getElementById('tokenAlert');
+  if(!val){ alertBox.innerHTML = `<div class="alert alert-danger">Token tidak boleh kosong.</div>`; return; }
+  const tk = state.tokens.find(t=>t.token===val);
+  if(!tk){ alertBox.innerHTML = `<div class="alert alert-danger">Token tidak ditemukan. Periksa kembali penulisannya.</div>`; return; }
+  if(state.settings.satuKaliKesempatan && tk.used){ alertBox.innerHTML = `<div class="alert alert-danger">Token ini sudah digunakan. Hubungi panitia jika ini keliru.</div>`; return; }
+  if(state.questions.length===0){ alertBox.innerHTML = `<div class="alert alert-danger">Bank soal masih kosong. Hubungi panitia.</div>`; return; }
+  startExam(tk);
+}
+function startExam(tk){
+  let pool = state.settings.acakSoal ? shuffle(state.questions) : state.questions.slice();
+  const n = state.settings.jumlahSoalTampil>0 ? Math.min(state.settings.jumlahSoalTampil, pool.length) : pool.length;
+  pool = pool.slice(0, n);
+  const qs = pool.map(q=>{
+    let order = q.opsi.map((_,i)=>i);
+    if(state.settings.acakOpsi) order = shuffle(order);
+    return {...q, order};
+  });
+  state.session = {
+    token: tk.token, nama: tk.nama, asal: tk.asal,
+    questions: qs, answers:{}, index:0,
+    endTime: Date.now() + state.settings.durasiMenit*60000
+  };
+  state.screen='exam';
+  render();
+  startTimer();
+}
+
+/* ============================= EXAM ============================= */
+function examScreen(){
+  const s = state.session;
+  if(!s) return `<div class="empty">Sesi tidak ditemukan.</div>`;
+  const q = s.questions[s.index];
+  const total = s.questions.length;
+  const answeredCount = Object.keys(s.answers).length;
+  return `
+  <div class="card card-pad">
+    <div class="exam-top">
+      <div>
+        <div class="exam-progress">Soal ${s.index+1} dari ${total} &nbsp;·&nbsp; ${escapeHtml(s.nama)}</div>
+      </div>
+      <div class="timer-box" id="timerBox">${ICONS.clock} <span id="timerText">--:--</span></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${((s.index+1)/total*100).toFixed(1)}%"></div></div>
+    <div class="q-eyebrow">Pertanyaan ${s.index+1}</div>
+    ${q.gambarData ? `<img class="q-image" src="${q.gambarData}" alt="Gambar soal">` : ''}
+    <div class="q-text" dir="auto">${escapeHtml(q.teks)}</div>
+    <div>
+      ${q.order.map((origIdx,pos)=>{
+        const letter = String.fromCharCode(65+pos);
+        const selected = s.answers[q.id]===origIdx;
+        return `<div class="opt ${selected?'selected':''}" onclick="selectAnswer('${q.id}', ${origIdx})">
+          <div class="opt-letter">${letter}</div>
+          <div class="opt-text" dir="auto">${escapeHtml(q.opsi[origIdx])}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="exam-nav">
+      <button class="btn btn-ghost" ${s.index===0?'disabled':''} onclick="examNav(-1)">${ICONS.arrowLeft} Sebelumnya</button>
+      <div style="font-size:12.5px;color:var(--muted);">${answeredCount} dari ${total} terjawab</div>
+      ${s.index===total-1
+        ? `<button class="btn btn-accent" onclick="confirmFinish()">Selesai Ujian ${ICONS.check}</button>`
+        : `<button class="btn btn-primary" onclick="examNav(1)">Berikutnya ${ICONS.arrowRight}</button>`}
+    </div>
+    <div class="qnav-grid">
+      ${s.questions.map((qq,i)=>`<div class="qnav-dot ${s.answers[qq.id]!==undefined?'answered':''} ${i===s.index?'current':''}" onclick="jumpTo(${i})">${i+1}</div>`).join('')}
+    </div>
+  </div>`;
+}
+function selectAnswer(qid, origIdx){
+  state.session.answers[qid] = origIdx;
+  render();
+}
+function examNav(dir){
+  const s = state.session;
+  const ni = s.index + dir;
+  if(ni<0 || ni>=s.questions.length) return;
+  s.index = ni;
+  render();
+}
+function jumpTo(i){ state.session.index = i; render(); }
+function confirmFinish(){
+  const s = state.session;
+  const unanswered = s.questions.length - Object.keys(s.answers).length;
+  if(unanswered>0){
+    if(!confirm(`Masih ada ${unanswered} soal belum dijawab. Yakin ingin menyelesaikan ujian sekarang?`)) return;
+  } else {
+    if(!confirm('Yakin ingin menyelesaikan ujian dan mengirim jawaban?')) return;
+  }
+  finishExam();
+}
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    if(!state.session){ clearInterval(timerInterval); return; }
+    const remain = state.session.endTime - Date.now();
+    if(remain<=0){
+      clearInterval(timerInterval);
+      finishExam();
+      return;
+    }
+    updateTimerDisplay();
+  },1000);
+}
+function updateTimerDisplay(){
+  const el = document.getElementById('timerText');
+  const box = document.getElementById('timerBox');
+  if(!el || !state.session) return;
+  const remain = Math.max(0, Math.round((state.session.endTime - Date.now())/1000));
+  el.textContent = fmtTime(remain);
+  if(box){ if(remain<=60) box.classList.add('warn'); else box.classList.remove('warn'); }
+}
+async function finishExam(){
+  clearInterval(timerInterval);
+  const s = state.session;
+  let benar = 0;
+  s.questions.forEach(q=>{
+    if(s.answers[q.id] === q.correctIndex) benar++;
+  });
+  const total = s.questions.length;
+  const salah = total - benar;
+  const skor = total>0 ? Math.round((benar/total)*100) : 0;
+  const result = {
+    id: uid(), token: s.token, nama: s.nama, asal: s.asal,
+    skor, benar, salah, total,
+    mulai: s.endTime - state.settings.durasiMenit*60000,
+    selesai: Date.now()
+  };
+  state.results.push(result);
+  try{ await db.ref(FB_PATHS.RESULTS+'/'+result.id).set(result); }catch(e){ showToast('Gagal menyimpan hasil ke server','danger'); }
+  const tk = state.tokens.find(t=>t.token===s.token);
+  if(tk){
+    tk.used = true;
+    try{ await db.ref(FB_PATHS.TOKENS+'/'+tk.token+'/used').set(true); }catch(e){ showToast('Gagal memperbarui status token','danger'); }
+  }
+  state.lastResult = result;
+  state.session = null;
+  state.screen = 'result';
+  render();
+}
+
+/* ============================= RESULT ============================= */
+function resultScreen(){
+  const r = state.lastResult;
+  if(!r) return `<div class="empty">Tidak ada hasil untuk ditampilkan.</div>`;
+  const lulus = r.skor >= state.settings.kkm;
+  const circumference = 2*Math.PI*54;
+  const dash = circumference * (r.skor/100);
+  return `
+  <div class="center-wrap">
+    <div class="card card-pad" style="text-align:center;">
+      ${state.settings.logoData ? `<img src="${state.settings.logoData}" alt="Logo Mapsi" style="width:52px;height:52px;object-fit:contain;margin-bottom:10px;">` : ''}
+      <div style="font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;">Hasil Ujian</div>
+      <h3 style="margin-top:6px;">${escapeHtml(r.nama)}</h3>
+      ${r.asal ? `<div style="color:var(--muted);font-size:13px;margin-top:2px;">${escapeHtml(r.asal)}</div>` : ''}
+      <div class="score-ring">
+        <svg width="150" height="150" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#EEF2EB" stroke-width="10"/>
+          <circle cx="60" cy="60" r="54" fill="none" stroke="${lulus?'#1F7A4D':'#C9973E'}" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="${(2*Math.PI*54).toFixed(1)}" stroke-dashoffset="${(2*Math.PI*54*(1-r.skor/100)).toFixed(1)}"/>
+        </svg>
+        <div class="score-num"><div class="n">${r.skor}</div><div class="lbl">Skor</div></div>
+      </div>
+      <span class="badge ${lulus?'badge-ok':'badge-warn'}">${lulus?'Lulus KKM':'Belum Mencapai KKM'} (${state.settings.kkm})</span>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="v">${r.total}</div><div class="k">Total Soal</div></div>
+        <div class="stat-box"><div class="v" style="color:var(--success)">${r.benar}</div><div class="k">Benar</div></div>
+        <div class="stat-box"><div class="v" style="color:var(--danger)">${r.salah}</div><div class="k">Salah</div></div>
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:24px;" onclick="goHome()">Selesai</button>
+    </div>
+  </div>`;
+}
+
+/* ============================= ADMIN LOGIN ============================= */
+function adminLoginScreen(){
+  return `
+  <div class="center-wrap">
+    <div class="card card-pad">
+      <div class="center-star">${ICONS.shield.replace('width="22" height="22"','width="40" height="40"').replace('currentColor','#0B4B3C')}</div>
+      <h3 style="margin-bottom:6px;">Masuk Sebagai Admin</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;">Masukkan PIN panitia untuk mengelola lomba.</p>
+      <div id="pinAlert"></div>
+      <div class="field" style="text-align:left;">
+        <label>PIN Admin</label>
+        <input id="pinInput" type="password" class="input pin-input" maxlength="12" placeholder="••••••" onkeydown="if(event.key==='Enter')submitPin()">
+        <div class="hint" style="text-align:left;">PIN bawaan: <span class="kbd">123456</span> (ubah di tab Pengaturan setelah masuk)</div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="submitPin()">Masuk</button>
+      <div style="margin-top:16px;"><button class="btn btn-ghost btn-sm" onclick="goHome()">${ICONS.arrowLeft} Kembali</button></div>
+    </div>
+  </div>`;
+}
+function submitPin(){
+  const val = document.getElementById('pinInput').value.trim();
+  if(val !== state.settings.adminPin){
+    document.getElementById('pinAlert').innerHTML = `<div class="alert alert-danger">PIN salah. Coba lagi.</div>`;
+    return;
+  }
+  state.isAdmin = true;
+  state.screen = 'admin';
+  state.adminTab = 'soal';
+  render();
+}
+function adminLogout(){ state.isAdmin=false; goHome(); }
+
+/* ============================= ADMIN DASHBOARD ============================= */
+function adminScreen(){
+  return `
+  <div class="tabs">
+    <button class="tab-btn ${state.adminTab==='soal'?'active':''}" onclick="setAdminTab('soal')">Bank Soal (${state.questions.length})</button>
+    <button class="tab-btn ${state.adminTab==='token'?'active':''}" onclick="setAdminTab('token')">Token Peserta (${state.tokens.length})</button>
+    <button class="tab-btn ${state.adminTab==='pengaturan'?'active':''}" onclick="setAdminTab('pengaturan')">Pengaturan</button>
+    <button class="tab-btn ${state.adminTab==='rekap'?'active':''}" onclick="setAdminTab('rekap')">Rekap Nilai (${state.results.length})</button>
+  </div>
+  ${state.adminTab==='soal' ? tabSoal() : ''}
+  ${state.adminTab==='token' ? tabToken() : ''}
+  ${state.adminTab==='pengaturan' ? tabPengaturan() : ''}
+  ${state.adminTab==='rekap' ? tabRekap() : ''}
+  `;
+}
+function setAdminTab(t){ state.adminTab=t; render(); }
+
+/* ---- Tab: Bank Soal ---- */
+function tabSoal(){
+  return `
+  <div class="section-head">
+    <div><h2>Bank Soal</h2><div class="desc">Kelola daftar pertanyaan pilihan ganda untuk lomba.</div></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost" onclick="openImportModal()">${ICONS.upload} Import Soal</button>
+      <button class="btn btn-primary" onclick="openQuestionModal()">${ICONS.plus} Tambah Soal</button>
+    </div>
+  </div>
+  ${state.questions.length===0 ? `
+    <div class="card"><div class="empty">
+      ${ICONS.book}
+      <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Belum ada soal</div>
+      <div>Tambah manual atau import banyak soal sekaligus.</div>
+    </div></div>
+  ` : state.questions.map((q,i)=>`
+    <div class="q-list-item">
+      <div class="qh">
+        ${q.gambarData ? `<img class="q-image-thumb" src="${q.gambarData}" alt="Gambar soal">` : ''}
+        <div style="flex:1;" dir="auto"><b>${i+1}.</b> ${escapeHtml(q.teks)}</div>
+        <div style="display:flex;gap:6px;flex:none;">
+          <button class="btn btn-ghost btn-sm" onclick="openQuestionModal('${q.id}')">${ICONS.edit}</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteQuestion('${q.id}')">${ICONS.trash}</button>
+        </div>
+      </div>
+      <div class="opts">
+        ${q.opsi.map((o,idx)=>`<div class="${idx===q.correctIndex?'ok':''}">${String.fromCharCode(65+idx)}. ${escapeHtml(o)} ${idx===q.correctIndex?'✓':''}</div>`).join('')}
+      </div>
+    </div>
+  `).join('')}
+  `;
+}
+function deleteQuestion(id){
+  if(!confirm('Hapus soal ini?')) return;
+  state.questions = state.questions.filter(q=>q.id!==id);
+  saveQuestions();
+  render();
+  showToast('Soal dihapus');
+}
+function openQuestionModal(editId){
+  state.modal = {type:'question', editId: editId||null};
+  render();
+}
+function openImportModal(){
+  state.modal = {type:'import'};
+  render();
+}
+function closeModal(){ state.modal=null; render(); }
+
+/* ---- Tab: Token & Peserta ---- */
+function tabToken(){
+  const belum = state.tokens.filter(t=>!t.used).length;
+  return `
+  <div class="section-head">
+    <div><h2>Token Peserta</h2><div class="desc">Buat token unik untuk tiap peserta. ${belum} belum dipakai dari ${state.tokens.length} total.</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="refreshTokenTab()">${ICONS.clock} Perbarui Status</button>
+  </div>
+  <div class="card card-pad" style="margin-bottom:20px;">
+    <div class="row">
+      <div class="field" style="margin:0;">
+        <label>Buat Token Cepat</label>
+        <div style="display:flex;gap:8px;">
+          <input id="quickNama" class="input" placeholder="Nama peserta">
+          <button class="btn btn-primary" style="flex:none;" onclick="quickGenToken()">${ICONS.plus} Buat</button>
+        </div>
+        <div class="hint">Kolom "Asal/Kelas" bisa diisi lewat tombol ubah pada tabel.</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="field" style="margin:0;">
+      <label>Buat Banyak Token Sekaligus</label>
+      <textarea id="bulkNames" class="textarea" placeholder="Satu nama per baris, contoh:&#10;Ahmad Fauzi&#10;Siti Aisyah&#10;Budi Santoso"></textarea>
+      <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+        <button class="btn btn-accent" onclick="bulkGenTokens()">${ICONS.plus} Buat Token untuk Semua</button>
+      </div>
+    </div>
+  </div>
+  <div class="section-head" style="margin-bottom:12px;">
+    <div></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost btn-sm" onclick="copyAllTokens()">${ICONS.copy} Salin Semua</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportTokensCSV()">${ICONS.download} Export CSV</button>
+    </div>
+  </div>
+  ${state.tokens.length===0 ? `<div class="card"><div class="empty">Belum ada token dibuat.</div></div>` : `
+  <div class="table-wrap"><table>
+    <thead><tr><th>Token</th><th>Nama</th><th>Asal / Kelas</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      ${state.tokens.slice().reverse().map(t=>`
+        <tr>
+          <td><span class="token-code">${t.token}</span></td>
+          <td>${escapeHtml(t.nama)}</td>
+          <td>
+            <input class="input" style="padding:6px 8px;font-size:12.5px;min-width:120px;" value="${escapeHtml(t.asal||'')}" placeholder="-" onchange="updateTokenAsal('${t.token}', this.value)">
+          </td>
+          <td><span class="badge ${t.used?'badge-off':'badge-ok'}">${t.used?'Sudah Dipakai':'Belum Dipakai'}</span></td>
+          <td style="display:flex;gap:6px;">
+            <button class="btn btn-ghost btn-sm" onclick="copyOneToken('${t.token}')">${ICONS.copy}</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteToken('${t.token}')">${ICONS.trash}</button>
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table></div>`}
+  `;
+}
+function quickGenToken(){
+  const nama = document.getElementById('quickNama').value.trim();
+  if(!nama){ showToast('Isi nama peserta terlebih dahulu','danger'); return; }
+  const token = genToken(state.tokens);
+  const data = {nama, asal:'', used:false, createdAt:Date.now()};
+  state.tokens.push({token, ...data});
+  db.ref(FB_PATHS.TOKENS+'/'+token).set(data).catch(()=>showToast('Gagal menyimpan token ke server','danger'));
+  document.getElementById('quickNama').value='';
+  render();
+  showToast(`Token ${token} dibuat untuk ${nama}`);
+}
+function bulkGenTokens(){
+  const raw = document.getElementById('bulkNames').value;
+  const names = raw.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(names.length===0){ showToast('Masukkan minimal satu nama','danger'); return; }
+  const updates = {};
+  names.forEach(nama=>{
+    const token = genToken(state.tokens);
+    const data = {nama, asal:'', used:false, createdAt:Date.now()};
+    state.tokens.push({token, ...data});
+    updates[FB_PATHS.TOKENS+'/'+token] = data;
+  });
+  db.ref().update(updates).catch(()=>showToast('Gagal menyimpan token ke server','danger'));
+  render();
+  showToast(`${names.length} token berhasil dibuat`);
+}
+function updateTokenAsal(token, val){
+  const t = state.tokens.find(x=>x.token===token);
+  if(t){ t.asal = val; db.ref(FB_PATHS.TOKENS+'/'+token+'/asal').set(val).catch(()=>showToast('Gagal menyimpan','danger')); }
+}
+function deleteToken(token){
+  if(!confirm('Hapus token ini?')) return;
+  state.tokens = state.tokens.filter(t=>t.token!==token);
+  db.ref(FB_PATHS.TOKENS+'/'+token).remove().catch(()=>showToast('Gagal menghapus token','danger'));
+  render();
+  showToast('Token dihapus');
+}
+function refreshTokenTab(){ render(); showToast('Status token diperbarui'); }
+function copyOneToken(token){
+  navigator.clipboard?.writeText(token).then(()=>showToast('Token disalin: '+token)).catch(()=>{});
+}
+function copyAllTokens(){
+  const text = state.tokens.map(t=>`${t.token}\t${t.nama}\t${t.asal||''}`).join('\n');
+  navigator.clipboard?.writeText(text).then(()=>showToast('Semua token disalin ke clipboard')).catch(()=>showToast('Gagal menyalin','danger'));
+}
+function exportTokensCSV(){
+  const rows = [['Token','Nama','Asal/Kelas','Status'], ...state.tokens.map(t=>[t.token,t.nama,t.asal||'',t.used?'Sudah Dipakai':'Belum Dipakai'])];
+  downloadCSV('token-peserta-mapsi.csv', rows);
+}
+
+/* ---- Tab: Pengaturan ---- */
+function tabPengaturan(){
+  const s = state.settings;
+  return `
+  <div class="section-head"><div><h2>Pengaturan Lomba</h2><div class="desc">Atur identitas lomba, durasi, dan aturan ujian.</div></div></div>
+  <div class="card card-pad">
+    <div class="row">
+      <div class="field"><label>Judul Lomba</label><input id="setJudul" class="input" value="${escapeHtml(s.judul)}"></div>
+      <div class="field"><label>Tingkat / Wilayah</label><input id="setWilayah" class="input" placeholder="Tingkat Kecamatan Tawangharjo" value="${escapeHtml(s.wilayah||'')}"></div>
+    </div>
+    <div class="field"><label>Sub Judul / Penyelenggara</label><input id="setSub" class="input" value="${escapeHtml(s.subjudul)}"></div>
+    <div class="divider"></div>
+    <div class="field">
+      <label>Logo Mapsi</label>
+      <div class="logo-upload-box">
+        <div class="logo-preview" id="logoPreviewBox">${s.logoData ? `<img src="${s.logoData}" alt="Logo">` : ICONS.book}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm file-btn">${ICONS.upload} Unggah Logo<input type="file" accept="image/*" onchange="handleLogoUpload(event)"></button>
+          ${s.logoData ? `<button class="btn btn-danger btn-sm" onclick="removeLogo()">${ICONS.trash} Hapus Logo</button>` : ''}
+        </div>
+      </div>
+      <div class="hint">Unggah logo resmi Mapsi (PNG/JPG, latar transparan disarankan). Logo akan tampil di header dan halaman utama.</div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="field"><label>Durasi Ujian (menit)</label><input id="setDurasi" type="number" min="1" class="input" value="${s.durasiMenit}"></div>
+      <div class="field"><label>Jumlah Soal per Peserta</label><input id="setJumlah" type="number" min="0" class="input" value="${s.jumlahSoalTampil}">
+        <div class="hint">Isi 0 untuk menampilkan semua soal di bank soal.</div>
+      </div>
+      <div class="field"><label>Nilai KKM / Passing Grade</label><input id="setKkm" type="number" min="0" max="100" class="input" value="${s.kkm}"></div>
+    </div>
+    <div class="divider"></div>
+    <div class="toggle-row">
+      <div><div class="ttl">Acak Urutan Soal</div><div class="desc">Setiap peserta mendapat urutan soal berbeda.</div></div>
+      <label class="switch"><input id="setAcakSoal" type="checkbox" ${s.acakSoal?'checked':''}><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="ttl">Acak Urutan Opsi Jawaban</div><div class="desc">Posisi pilihan A/B/C/D diacak per peserta.</div></div>
+      <label class="switch"><input id="setAcakOpsi" type="checkbox" ${s.acakOpsi?'checked':''}><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="ttl">Satu Kali Kesempatan per Token</div><div class="desc">Token yang sudah dipakai tidak bisa login ulang.</div></div>
+      <label class="switch"><input id="setSatuKali" type="checkbox" ${s.satuKaliKesempatan?'checked':''}><span class="slider"></span></label>
+    </div>
+    <div class="divider"></div>
+    <div class="field"><label>Ganti PIN Admin</label><input id="setPin" class="input pin-input" style="letter-spacing:.15em;text-align:left;" placeholder="Kosongkan jika tidak diubah" maxlength="12"></div>
+    <button class="btn btn-primary" onclick="saveSettingsForm()">Simpan Pengaturan</button>
+  </div>
+  <div class="divider"></div>
+  <div class="card card-pad">
+    <h3 style="font-size:16px;margin-bottom:6px;">Zona Berbahaya</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:14px;">Menghapus data hasil ujian akan mengembalikan semua token menjadi "Belum Dipakai" dan mengosongkan rekap nilai. Soal dan token tidak terhapus.</p>
+    <button class="btn btn-danger" onclick="resetResults()">${ICONS.trash} Reset Semua Hasil Ujian</button>
+  </div>
+  <p class="hint" style="margin-top:16px;color:var(--muted);">Catatan: seluruh data (soal, token, hasil) tersimpan bersama dan dapat diakses oleh siapa pun yang membuka tautan aplikasi ini.</p>
+  `;
+}
+function saveSettingsForm(){
+  const s = state.settings;
+  s.judul = document.getElementById('setJudul').value.trim() || DEFAULT_SETTINGS.judul;
+  s.wilayah = document.getElementById('setWilayah').value.trim();
+  s.subjudul = document.getElementById('setSub').value.trim();
+  s.durasiMenit = Math.max(1, parseInt(document.getElementById('setDurasi').value)||30);
+  s.jumlahSoalTampil = Math.max(0, parseInt(document.getElementById('setJumlah').value)||0);
+  s.kkm = Math.min(100, Math.max(0, parseInt(document.getElementById('setKkm').value)||0));
+  s.acakSoal = document.getElementById('setAcakSoal').checked;
+  s.acakOpsi = document.getElementById('setAcakOpsi').checked;
+  s.satuKaliKesempatan = document.getElementById('setSatuKali').checked;
+  const newPin = document.getElementById('setPin').value.trim();
+  if(newPin) s.adminPin = newPin;
+  saveSettings();
+  render();
+  showToast('Pengaturan disimpan');
+}
+async function handleLogoUpload(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  try{
+    const dataUrl = await resizeImageFile(file, 300, 0.85);
+    state.settings.logoData = dataUrl;
+    await saveSettings();
+    render();
+    showToast('Logo berhasil diunggah');
+  }catch(e){
+    showToast('Gagal mengunggah logo, coba file lain','danger');
+  }
+}
+function removeLogo(){
+  if(!confirm('Hapus logo Mapsi?')) return;
+  state.settings.logoData = null;
+  saveSettings();
+  render();
+  showToast('Logo dihapus');
+}
+function resetResults(){
+  if(!confirm('Yakin reset semua hasil ujian dan status token? Tindakan ini tidak dapat dibatalkan.')) return;
+  state.results = [];
+  state.tokens.forEach(t=>t.used=false);
+  const tokenUpdates = {};
+  state.tokens.forEach(t=>{ tokenUpdates[FB_PATHS.TOKENS+'/'+t.token+'/used'] = false; });
+  Promise.all([
+    db.ref(FB_PATHS.RESULTS).remove(),
+    db.ref().update(tokenUpdates)
+  ]).catch(()=>showToast('Gagal mereset data di server','danger'));
+  render();
+  showToast('Semua hasil ujian direset');
+}
+
+/* ---- Tab: Rekap Nilai ---- */
+function tabRekap(){
+  const q = (state._rekapSearch||'').toLowerCase();
+  let list = state.results.slice().sort((a,b)=>b.skor-a.skor || a.selesai-b.selesai);
+  if(q) list = list.filter(r=>r.nama.toLowerCase().includes(q) || (r.asal||'').toLowerCase().includes(q));
+  return `
+  <div class="section-head">
+    <div><h2>Rekap Nilai Peserta</h2><div class="desc">Peringkat otomatis berdasarkan skor tertinggi.</div></div>
+    <div style="display:flex;gap:8px;">
+      <input class="input" style="width:200px;" placeholder="Cari nama / asal..." value="${escapeHtml(state._rekapSearch||'')}" oninput="setRekapSearch(this.value)">
+      <button class="btn btn-ghost" onclick="exportResultsCSV()">${ICONS.download} Export CSV</button>
+    </div>
+  </div>
+  ${list.length===0 ? `<div class="card"><div class="empty">Belum ada peserta yang menyelesaikan ujian.</div></div>` : `
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Nama</th><th>Asal/Kelas</th><th>Skor</th><th>Benar</th><th>Salah</th><th>Status</th><th>Selesai</th></tr></thead>
+    <tbody>
+      ${list.map((r,i)=>`
+        <tr>
+          <td>${i+1}</td>
+          <td><b>${escapeHtml(r.nama)}</b></td>
+          <td>${escapeHtml(r.asal||'-')}</td>
+          <td><b style="color:var(--primary)">${r.skor}</b></td>
+          <td>${r.benar}</td>
+          <td>${r.salah}</td>
+          <td><span class="badge ${r.skor>=state.settings.kkm?'badge-ok':'badge-warn'}">${r.skor>=state.settings.kkm?'Lulus':'Belum'}</span></td>
+          <td style="font-size:12px;color:var(--muted);">${fmtDate(r.selesai)}</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table></div>`}
+  `;
+}
+function setRekapSearch(v){ state._rekapSearch = v; render(); setTimeout(()=>{ const el=document.querySelector('.section-head input.input'); if(el){ el.focus(); el.setSelectionRange(el.value.length,el.value.length);} },0); }
+function exportResultsCSV(){
+  const rows = [['Peringkat','Nama','Asal/Kelas','Skor','Benar','Salah','Total Soal','Status','Selesai'],
+    ...state.results.slice().sort((a,b)=>b.skor-a.skor).map((r,i)=>[i+1,r.nama,r.asal||'',r.skor,r.benar,r.salah,r.total, r.skor>=state.settings.kkm?'Lulus':'Belum', fmtDate(r.selesai)])];
+  downloadCSV('rekap-nilai-mapsi.csv', rows);
+}
+function downloadCSV(filename, rows){
+  const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================= MODALS ============================= */
+function modalHtml(){
+  if(state.modal.type==='question') return questionModal();
+  if(state.modal.type==='import') return importModal();
+  return '';
+}
+function questionModal(){
+  const editing = state.modal.editId ? state.questions.find(q=>q.id===state.modal.editId) : null;
+  const opsi = editing ? editing.opsi : ['','','',''];
+  const correct = editing ? editing.correctIndex : 0;
+  return `
+  <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-head"><h3 style="font-size:17px;">${editing?'Ubah Soal':'Tambah Soal'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>Pertanyaan</label><textarea id="qTeks" class="textarea" dir="auto" placeholder="Boleh berisi teks Arab, contoh: Lafadz بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ dibaca sebelum...">${escapeHtml(editing?editing.teks:'')}</textarea>
+          <div class="hint">Tulisan Arab bisa langsung ditulis/ditempel di sini, akan tampil otomatis dengan huruf Arab yang sesuai.</div>
+        </div>
+        <div class="field">
+          <label>Gambar Soal (opsional)</label>
+          <div class="q-image-upload" id="qImageBox">
+            ${editing && editing.gambarData ? `<img src="${editing.gambarData}"><br>` : ''}
+            <div style="color:var(--muted);font-size:12.5px;">${ICONS.upload} Klik untuk unggah gambar</div>
+            <input type="file" accept="image/*" onchange="handleQuestionImageUpload(event)">
+          </div>
+          <input type="hidden" id="qImageData" value="${editing&&editing.gambarData?escapeHtml(editing.gambarData):''}">
+          ${editing && editing.gambarData ? `<button type="button" class="btn btn-danger btn-sm" style="margin-top:8px;" onclick="clearQuestionImage()">${ICONS.trash} Hapus Gambar</button>` : ''}
+        </div>
+        <div class="field"><label>Pilihan Jawaban (pilih lingkaran untuk jawaban benar)</label>
+          ${[0,1,2,3].map(i=>`
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <input type="radio" name="qCorrect" value="${i}" ${correct===i?'checked':''} style="width:18px;height:18px;flex:none;">
+              <input id="qOpt${i}" class="input" dir="auto" placeholder="Pilihan ${String.fromCharCode(65+i)}" value="${escapeHtml(opsi[i]||'')}">
+            </div>
+          `).join('')}
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;">
+          <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+          <button class="btn btn-primary" onclick="saveQuestionForm('${editing?editing.id:''}')">Simpan Soal</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+async function handleQuestionImageUpload(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  try{
+    const dataUrl = await resizeImageFile(file, 700, 0.72);
+    document.getElementById('qImageData').value = dataUrl;
+    const box = document.getElementById('qImageBox');
+    box.innerHTML = `<img src="${dataUrl}"><br><div style="color:var(--muted);font-size:12.5px;">${ICONS.upload} Ganti gambar</div><input type="file" accept="image/*" onchange="handleQuestionImageUpload(event)">`;
+    showToast('Gambar soal ditambahkan');
+  }catch(e){
+    showToast('Gagal mengunggah gambar, coba file lain','danger');
+  }
+}
+function clearQuestionImage(){
+  document.getElementById('qImageData').value = '';
+  const box = document.getElementById('qImageBox');
+  box.innerHTML = `<div style="color:var(--muted);font-size:12.5px;">${ICONS.upload} Klik untuk unggah gambar</div><input type="file" accept="image/*" onchange="handleQuestionImageUpload(event)">`;
+}
+function saveQuestionForm(editId){
+  const teks = document.getElementById('qTeks').value.trim();
+  const opsi = [0,1,2,3].map(i=>document.getElementById('qOpt'+i).value.trim());
+  const correctEl = document.querySelector('input[name="qCorrect"]:checked');
+  const gambarData = document.getElementById('qImageData').value || null;
+  if(!teks || opsi.some(o=>!o) || !correctEl){ showToast('Lengkapi pertanyaan, 4 pilihan, dan jawaban benar','danger'); return; }
+  const correctIndex = parseInt(correctEl.value);
+  if(editId){
+    const q = state.questions.find(x=>x.id===editId);
+    q.teks=teks; q.opsi=opsi; q.correctIndex=correctIndex; q.gambarData=gambarData;
+  } else {
+    state.questions.push({id:uid(), teks, opsi, correctIndex, gambarData});
+  }
+  saveQuestions();
+  closeModal();
+  showToast('Soal disimpan');
+}
+function importModal(){
+  return `
+  <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-head"><h3 style="font-size:17px;">Import Soal</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Tempel banyak soal sekaligus. Pisahkan tiap soal dengan baris kosong, gunakan format berikut. Tulisan Arab boleh langsung ditulis di soal maupun opsi. Baris <b>GAMBAR:</b> bersifat opsional (isi dengan link URL gambar) — untuk gambar dari file di HP/laptop, unggah lewat tombol Edit setelah soal masuk ke bank soal.</p>
+        <div class="card" style="background:var(--surface-2);border:none;padding:12px 14px;font-family:var(--font-mono);font-size:12px;white-space:pre-wrap;margin-bottom:16px;" dir="auto">1. Lafadz بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ dibaca ketika...
+A. Akan memulai suatu pekerjaan yang baik
+B. Selesai makan
+C. Masuk kamar mandi
+D. Tidur
+KUNCI: A
+
+2. Nabi terakhir dalam agama Islam adalah...
+GAMBAR: https://contoh.com/gambar-soal.jpg
+A. Nabi Isa
+B. Nabi Musa
+C. Nabi Muhammad SAW
+D. Nabi Ibrahim
+KUNCI: C</div>
+        <div class="field"><label>Tempel Soal di Sini</label><textarea id="importText" class="textarea" dir="auto" style="min-height:180px;"></textarea></div>
+        <div id="importResult"></div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;">
+          <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+          <button class="btn btn-primary" onclick="processImport()">${ICONS.upload} Proses Import</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function parseImportText(text){
+  const blocks = text.split(/\n\s*\n/).map(b=>b.trim()).filter(Boolean);
+  const imported = [];
+  let errorCount = 0;
+  blocks.forEach(block=>{
+    const lines = block.split('\n').map(l=>l.trim()).filter(Boolean);
+    const optionLines = [];
+    let kunci = null;
+    let gambarUrl = null;
+    const questionLines = [];
+    lines.forEach(line=>{
+      const mKunci = line.match(/^(KUNCI|JAWABAN)\s*[:\-]?\s*([A-Da-d])/i);
+      const mOpt = line.match(/^([A-Da-d])[\.\)]\s*(.+)$/);
+      const mGambar = line.match(/^GAMBAR\s*[:\-]\s*(\S+)/i);
+      if(mKunci){ kunci = mKunci[2].toUpperCase(); }
+      else if(mGambar){ gambarUrl = mGambar[1].trim(); }
+      else if(mOpt){ optionLines.push({letter:mOpt[1].toUpperCase(), text:mOpt[2].trim()}); }
+      else { questionLines.push(line); }
+    });
+    const teks = questionLines.join(' ').replace(/^\d+[\.\)]\s*/, '').trim();
+    optionLines.sort((a,b)=>a.letter.localeCompare(b.letter));
+    if(teks && optionLines.length>=2 && kunci){
+      const correctIndex = optionLines.findIndex(o=>o.letter===kunci);
+      if(correctIndex>=0){
+        imported.push({id:uid(), teks, opsi:optionLines.map(o=>o.text), correctIndex, gambarData: gambarUrl||null});
+      } else errorCount++;
+    } else if(block){ errorCount++; }
+  });
+  return {imported, errorCount};
+}
+function processImport(){
+  const text = document.getElementById('importText').value;
+  if(!text.trim()){ showToast('Tempelkan teks soal terlebih dahulu','danger'); return; }
+  const {imported, errorCount} = parseImportText(text);
+  const resultBox = document.getElementById('importResult');
+  if(imported.length===0){
+    resultBox.innerHTML = `<div class="alert alert-danger">Tidak ada soal valid yang terbaca. Periksa kembali format penulisan.</div>`;
+    return;
+  }
+  state.questions.push(...imported);
+  saveQuestions();
+  resultBox.innerHTML = `<div class="alert alert-ok">${imported.length} soal berhasil diimpor${errorCount>0 ? `, ${errorCount} blok dilewati karena format tidak sesuai`:''}.</div>`;
+  setTimeout(()=>{ closeModal(); showToast(`${imported.length} soal ditambahkan ke bank soal`); }, 900);
+}
+
+/* ============================= AFTER RENDER ============================= */
+function afterRender(){
+  if(state.screen==='exam') updateTimerDisplay();
+}
+
+/* ============================= INIT ============================= */
+loadAll();
+</script>
+</body>
+</html>
